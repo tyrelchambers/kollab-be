@@ -29,6 +29,7 @@ const User = sequelize.define("User", {
   instagram: DataTypes.STRING,
   github: DataTypes.STRING,
   gitlab: DataTypes.STRING,
+  googleSigninToken: DataTypes.STRING
 }, {
   timestamps: true
 })

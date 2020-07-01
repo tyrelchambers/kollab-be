@@ -8,7 +8,7 @@ import User from './User'
 import sequelize from '../index.js'
 
 (async() => {
-  sequelize.sync({ force: true })
+  sequelize.sync({force:true})
 })()
 
 sequelize
