@@ -28,6 +28,8 @@ app.post('/login', async (req, res, next) => {
       }
     })
 
+    if (!user) throw new Error("No user found")
+
     res.send({
       user: user,
       cookie: rememberMe === true ? {
