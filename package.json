@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-node": "babel-node --presets=env",
-    "start": "nodemon --harmony --exec npm run babel-node server.js ",
+    "start": "nodemon server.js ",
     "seed": "NODE_ENV=test npx sequelize db:seed:all",
     "undo-seed": "NODE_ENV=test npx sequelize db:seed:undo:all",
     "test-env": "NODE_ENV=test npm run start"
@@ -15,11 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2017": "^6.24.1",
-    "babel-register": "^6.26.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",

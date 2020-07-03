@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize'
-import sequelize from '../index'
+const { DataTypes } = require('sequelize')
+const sequelize = require('../index')
 
 const GithubLink = sequelize.define("GithubLink", {
   uuid: {

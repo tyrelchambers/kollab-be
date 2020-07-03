@@ -1,15 +1,14 @@
-import Comment from './Comment'
-import GithubLink from './GithubLink'
-import Project from './Project'
-import ProjectImage from './ProjectImage'
-import ProjectLink from './ProjectLink'
-import ProjectRole from './ProjectRole'
-import User from './User'
-import sequelize from '../index.js'
+const Comment = require('./Comment')
+const GithubLink = require('./GithubLink')
+const Project = require('./Project')
+const ProjectImage = require('./ProjectImage')
+const ProjectLink = require('./ProjectLink')
+const ProjectRole = require('./ProjectRole')
+const User = require('./User')
+const sequelize = require('../index.js')
 
-(async() => {
-  sequelize.sync()
-})()
+sequelize.sync()
+
 
 sequelize
   .authenticate()

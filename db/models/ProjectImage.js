@@ -1,6 +1,6 @@
-import { DataTypes, Deferrable } from 'sequelize'
-import sequelize from '../index'
-import Project from './Project'
+const { DataTypes, Deferrable } = require('sequelize')
+const sequelize = require('../index')
+const Project = require('./Project')
 
 const ProjectImage = sequelize.define("ProjectImages", {
   uuid: {

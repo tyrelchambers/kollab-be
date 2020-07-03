@@ -1,14 +1,14 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+const express = require('express')
+const bodyParser = require('body-parser')
 
-import cors from 'cors';
-import helmet from 'helmet'
-import expressSanitizer from 'express-sanitizer'
-import models from './db/Models/index'
-import config from './config';
-import session from 'express-session'
-import auth from './api/auth/index'
-import { uuid } from 'uuidv4'
+const cors = require('cors')
+const helmet = require('helmet')
+const expressSanitizer = require('express-sanitizer')
+const models = require('./db/Models/index')
+const config = require('./config')
+const session = require('express-session')
+const auth = require('./api/auth/index')
+const { uuid } = require('uuidv4')
 
 const MongoStore = require('connect-mongo')(session);
 

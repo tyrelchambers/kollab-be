@@ -1,5 +1,5 @@
-import express from 'express'
-import m from '../../db/models/index'
+const express = require('express')
+const m = require('../../db/models/index')
 
 const app = express.Router()
 
@@ -27,8 +27,6 @@ app.post('/login', async (req, res, next) => {
         return res.dataValues
       }
     })
-
-    console.log(rememberMe)
 
     res.send({
       user: user,

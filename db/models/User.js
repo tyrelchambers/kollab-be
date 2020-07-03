@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize'
-import sequelize from '../index.js'
+const { DataTypes } = require('sequelize')
+const sequelize = require('../index.js')
 
 const User = sequelize.define("User", {
   uuid: {

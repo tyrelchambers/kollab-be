@@ -1,6 +1,6 @@
-import { DataTypes, Deferrable } from 'sequelize'
-import sequelize from '../index'
-import User from './User'
+const { DataTypes, Deferrable } = require('sequelize')
+const sequelize = require('../index')
+const User = require('./User')
 
 const Project = sequelize.define("Project", {
   uuid: {
