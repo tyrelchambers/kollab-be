@@ -5,5 +5,10 @@ module.exports = {
     host: 'localhost',
     dialect: 'postgres',
     database: 'kollab',
+  },
+  test: {
+    host: 'localhost',
+    dialect: 'postgres',
+    database: 'kollab_seed'
   }
 }

@@ -24,12 +24,18 @@ const User = sequelize.define("User", {
       isEmail: true
     }
   },
+  password: DataTypes.STRING,
   twitter: DataTypes.STRING,
   stackOverflow: DataTypes.STRING,
   instagram: DataTypes.STRING,
   github: DataTypes.STRING,
   gitlab: DataTypes.STRING,
-  googleSigninToken: DataTypes.STRING
+  googleSigninToken: DataTypes.STRING,
+  profileSetupStage: {
+    type: DataTypes.STRING,
+    defaultValue: "notStarted"
+  }
+
 }, {
   timestamps: true
 })

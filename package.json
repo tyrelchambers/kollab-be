@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-node": "babel-node --presets=env",
-    "start": "nodemon --exec npm run babel-node server.js"
+    "start": "nodemon --harmony --exec npm run babel-node server.js ",
+    "seed": "NODE_ENV=test npx sequelize db:seed:all",
+    "undo-seed": "NODE_ENV=test npx sequelize db:seed:undo:all",
+    "test-env": "NODE_ENV=test npm run start"
   },
   "keywords": [],
   "author": "",
@@ -19,16 +22,22 @@
     "babel-register": "^6.26.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-sanitizer": "^1.0.5",
+    "express-session": "^1.17.1",
+    "faker": "^4.1.0",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.9.21",
     "nodemon": "^2.0.4",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.2.2",
-    "sequelize-cli": "^6.1.0"
+    "sequelize-cli": "^6.1.0",
+    "uuidv4": "^6.1.1"
   }
 }
