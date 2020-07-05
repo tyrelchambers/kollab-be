@@ -1,5 +1,6 @@
 const express = require('express')
 const m = require('../../db/models/index')
+const passport = require('passport')
 
 const app = express.Router()
 
@@ -12,34 +13,19 @@ app.post('/register', async (req, res, next) => {
 })
 
 app.post('/login', async (req, res, next) => {
-  try {
-    const email = req.sanitize(req.body.email);
-    const password = req.sanitize(req.body.password)
-    const rememberMe = req.body.rememberMe;
-    
-    const user = await m.User.findOne({
-      where: {
-        email: email,
-        password: password
+  passport.authenticate('local', (err, user, info) => {
+    req.logIn(user, (err) => {
+      
+      if (err) {
+        return next("Something went wrong! Please check your email or password")
       }
-    }).then(res => {
-      if (res) {
-        return res.dataValues
-      }
-    })
 
-    if (!user) throw new Error("No user found")
-
-    res.send({
-      user: user,
-      cookie: rememberMe === true ? {
-        ...req.session.cookie,
-        sid: req.sessionID
-      } : null
+      return res.send({
+        message: "Logged in succesfully",
+        user
+      })
     })
-  } catch (error) {
-    next(error)
-  }
+  })(req,res,next)
 })
 
 module.exports = app

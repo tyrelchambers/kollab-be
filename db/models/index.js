@@ -7,7 +7,11 @@ const ProjectRole = require('./ProjectRole')
 const User = require('./User')
 const sequelize = require('../index.js')
 
-sequelize.sync()
+const fn = async () => {
+  await sequelize.sync()
+}
+
+fn();
 
 
 sequelize

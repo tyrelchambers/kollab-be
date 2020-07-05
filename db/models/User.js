@@ -34,6 +34,10 @@ const User = sequelize.define("User", {
   profileSetupStage: {
     type: DataTypes.STRING,
     defaultValue: "notStarted"
+  },
+  availableToHelp: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 
 }, {

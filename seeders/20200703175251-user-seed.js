@@ -17,6 +17,7 @@ for (let i = 0; i<5; i++) {
     github: faker.internet.userName(),
     gitlab: faker.internet.userName(),
     password: "123456",
+    availableToHelp: false,
     createdAt: new Date(Date.now()),
     updatedAt: new Date(Date.now())
   })
