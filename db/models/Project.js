@@ -23,8 +23,16 @@ const Project = sequelize.define("Project", {
       len: [50, 500]
     }
   },
+  likes: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
   thumbnailUrl: DataTypes.STRING,
   topics: DataTypes.STRING,
+  openPositions: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
   userId: {
     type: DataTypes.UUID,
     references: {
