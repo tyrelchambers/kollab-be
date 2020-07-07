@@ -41,7 +41,8 @@ app.post('/login', async (req, res, next) => {
 
     res.send({
       user,
-      token
+      token,
+      message: "Logged in successfully!"
     })
 
   } catch (error) {

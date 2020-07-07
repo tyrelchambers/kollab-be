@@ -27,19 +27,23 @@ const authHandler = async (req, res, next) => {
 }
 
 const checkJwt = async (req, res, next) => {
-  try {
-    const verifiedToken = jwt.verify(req.headers.token, config.development.secret, (err, decoded) => {
-      if (err) {
-        console.log(err)
-      }
+  let newToken = '';
+    await jwt.verify(req.headers.token, config.development.secret, (err, decoded) => {
+      if (err.name === "TokenExpiredError") {
+        const payload = jwt.verify(req.headers.token, config.development.secret, {ignoreExpiration: true} );
+        const token = jwt.sign({uuid: payload.uuid}, config.development.secret, {
+          expiresIn: "1d"
+        });
 
-      console.log(decoded)
+        newToken = token
+      }
     });
-  } catch (error) {
-    next(error)
-  }
+
+    req.headers.token = newToken
+    next()
 }
 
 module.exports = {
-  authHandler
+  authHandler,
+  checkJwt
 }

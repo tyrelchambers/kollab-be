@@ -7,6 +7,7 @@ const expressSanitizer = require('express-sanitizer')
 const auth = require('./api/auth/index')
 const user = require('./api/user')
 const project = require('./api/projects/index')
+const { checkJwt } = require('./middleware/middleware')
 require('dotenv').config();
 
 const port = process.env.PORT || '4000';
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(expressSanitizer());
 
+app.use(checkJwt)
 
 app.use('/api/auth', auth)
 app.use('/api/user', user);
