@@ -24,10 +24,37 @@ app.post("/new", authHandler, async (req, res, next) => {
       likes,
       thumbnail,
       topics,
-      openPositions
+      openPositions,
+      githubLinks,
+      collaborators
     } = req.body;
 
-    console.log(req.body)
+    const project = await m.Project.create({
+      title,
+      headline,
+      description,
+      likes,
+      thumbnail,
+      topics,
+      openPositions,
+      userId: res.locals.userId
+    })
+
+    const githubLinksToCreate = githubLinks.map(x => ({
+      projectId: project.uuid,
+      link: x
+    }))
+
+    m.GithubLink.bulkCreate(githubLinksToCreate)
+
+    const collaboratorsToCreate = collaborators.map(x => ({
+      userId: x.uuid,
+      projectId: project.uuid
+    }))
+
+    m.Collaborators.bulkCreate(collaboratorsToCreate)
+
+    res.send({message: "Project created!"})
   } catch (error) {
     next(error)
   }

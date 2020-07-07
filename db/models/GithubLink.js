@@ -1,5 +1,6 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, Deferrable } = require('sequelize')
 const sequelize = require('../index')
+const Project = require('./Project')
 
 const GithubLink = sequelize.define("GithubLink", {
   uuid: {
@@ -11,6 +12,14 @@ const GithubLink = sequelize.define("GithubLink", {
     type: DataTypes.STRING,
     validate: {
       isUrl: true
+    }
+  },
+  projectId: {
+    type: DataTypes.UUID,
+    references: {
+      model: Project,
+      key: 'uuid',
+      deferrable: Deferrable.INITIALLY_IMMEDIATE
     }
   }
 })

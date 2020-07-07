@@ -6,6 +6,7 @@ const helmet = require('helmet')
 const expressSanitizer = require('express-sanitizer')
 const auth = require('./api/auth/index')
 const user = require('./api/user')
+const upload = require('./api/upload/index')
 const project = require('./api/projects/index')
 const { checkJwt } = require('./middleware/middleware')
 require('dotenv').config();
@@ -29,6 +30,7 @@ app.use(checkJwt)
 app.use('/api/auth', auth)
 app.use('/api/user', user);
 app.use('/api/projects', project)
+app.use('/api/upload', upload);
 
 app.use(function (err, req, res, next) {
   console.error(err.message)
