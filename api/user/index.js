@@ -42,7 +42,7 @@ app.get('/projects', authHandler, async (req, res, next) => {
   }
 })
 
-app.get('/:email', async (req, res, next) => {
+app.get('/:email', authHandler, async (req, res, next) => {
   try {
     const {
       email
@@ -52,6 +52,9 @@ app.get('/:email', async (req, res, next) => {
       where: {
         email: {
           [Op.substring]: email
+        },
+        uuid: {
+          [Op.not] : res.locals.userId
         }
       },
       attributes: {
