@@ -27,7 +27,10 @@ const Project = sequelize.define("Project", {
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
-  thumbnailUrl: DataTypes.STRING,
+  thumbnailUrl: {
+    type: DataTypes.STRING,
+    defaultValue: 'https://arcanumdeepsecrets.files.wordpress.com/2010/06/blast_500x500.jpg'
+  },
   topics: DataTypes.STRING,
   openPositions: {
     type: DataTypes.BOOLEAN,

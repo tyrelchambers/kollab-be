@@ -53,6 +53,9 @@ app.get('/:email', async (req, res, next) => {
         email: {
           [Op.substring]: email
         }
+      },
+      attributes: {
+        exclude: ['password']
       }
     })
 

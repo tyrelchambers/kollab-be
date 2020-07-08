@@ -32,12 +32,13 @@ app.post('/login', async (req, res, next) => {
 
     if (!user) throw new Error("No user exists with that email")
 
-    const token = jwt.sign({uuid: user.uuid}, config.development.secret, {
+    // const hashPassword = brcypt.compareSync(password, user.password)
+    // if (!hashPassword) throw new Error("Something went wrong. Maybe it's your email or password?");
+    
+    const token = jwt.sign({uuid: user.uuid, email: user.email}, config.development.secret, {
       expiresIn: "1d"
     });
 
-    // const hashPassword = brcypt.compareSync(password, user.password)
-    // if (!hashPassword) throw new Error("Something went wrong. Maybe it's your email or password?");
 
     res.send({
       user,

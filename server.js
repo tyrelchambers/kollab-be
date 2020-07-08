@@ -33,7 +33,7 @@ app.use('/api/projects', project)
 app.use('/api/upload', upload);
 
 app.use(function (err, req, res, next) {
-  console.error(err.message)
+  console.error(err.message + " : " + err.detail)
   res.status(500).send({error: err.message || err})
 })
 
