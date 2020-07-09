@@ -116,4 +116,27 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
   }
 })
 
+app.get('/:projectId', async(req, res, next) => {
+  try {
+    const {
+      projectId
+    } = req.params;
+
+    const project = await m.Project.findOne({
+      where:{
+        uuid: projectId
+      },
+      include: [m.GithubLink, m.User]
+    }).then(res => {
+      if (res) {
+        return res.dataValues
+      }
+    })
+
+    res.send(project)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = app;
