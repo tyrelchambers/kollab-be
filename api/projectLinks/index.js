@@ -4,7 +4,7 @@ const m = require('../../db/models');
 
 const app = express.Router();
 
-app.post('/new', authHandler, async (req, res, next) => {
+app.post('/', authHandler, async (req, res, next) => {
   try {
     const {
       projectLinks,
@@ -19,8 +19,7 @@ app.post('/new', authHandler, async (req, res, next) => {
         }
       }
     })
-    console.log(linksToCreate)
-   // await m.ProjectLink.bulkCreate(linksToCreate)
+   await m.ProjectLink.bulkCreate(linksToCreate)
 
     res.sendStatus(200)
   } catch (error) {

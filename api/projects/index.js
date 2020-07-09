@@ -25,7 +25,6 @@ app.post("/new", authHandler, async (req, res, next) => {
       thumbnail,
       topics,
       openPositions,
-      projectLinks,
       collaborators
     } = req.body;
 
@@ -38,6 +37,10 @@ app.post("/new", authHandler, async (req, res, next) => {
       topics,
       openPositions,
       userId: res.locals.userId
+    }, {
+      returning: true
+    }).then(res => {
+      if (res) return res.dataValues
     })
 
     const collaboratorsToCreate = collaborators.map(x => ({
@@ -47,7 +50,10 @@ app.post("/new", authHandler, async (req, res, next) => {
 
     m.Collaborators.bulkCreate(collaboratorsToCreate)
 
-    res.send({message: "Project created!"})
+    res.send({
+      message: "Project created!",
+      project
+    })
   } catch (error) {
     next(error)
   }
@@ -84,17 +90,16 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
       ...rest
     } = req.body;
     
-    const project = await m.Project.update({
+    await m.Project.update({
       rest
     }, {
       where: {
         uuid: rest.uuid
       }
-    });
+    })
 
     res.send({
-      message: "Project updated!",
-      project
+      message: "Project updated!"
     })
   } catch (error) {
     next(error)
