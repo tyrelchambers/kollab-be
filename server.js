@@ -8,6 +8,8 @@ const auth = require('./api/auth/index')
 const user = require('./api/user')
 const upload = require('./api/upload/index')
 const project = require('./api/projects/index')
+const projectLinks = require('./api/projectLinks/index')
+
 const { checkJwt } = require('./middleware/middleware')
 require('dotenv').config();
 
@@ -31,9 +33,10 @@ app.use('/api/auth', auth)
 app.use('/api/user', user);
 app.use('/api/projects', project)
 app.use('/api/upload', upload);
+app.use('/api/projectLinks', projectLinks)
 
 app.use(function (err, req, res, next) {
-  console.error(err.message + " : " + err.original.detail)
+  console.error(err.message)
   res.status(500).send({error: err.message || err})
 })
 

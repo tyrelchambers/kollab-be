@@ -25,7 +25,7 @@ app.post("/new", authHandler, async (req, res, next) => {
       thumbnail,
       topics,
       openPositions,
-      githubLinks,
+      projectLinks,
       collaborators
     } = req.body;
 
@@ -39,13 +39,6 @@ app.post("/new", authHandler, async (req, res, next) => {
       openPositions,
       userId: res.locals.userId
     })
-
-    const githubLinksToCreate = githubLinks.map(x => ({
-      projectId: project.uuid,
-      link: x
-    }))
-
-    m.GithubLink.bulkCreate(githubLinksToCreate)
 
     const collaboratorsToCreate = collaborators.map(x => ({
       userId: x.uuid,
@@ -70,7 +63,7 @@ app.get('/:projectId/edit', authHandler, async (req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.GithubLink, m.User]
+      include: [m.ProjectLink, m.User]
     }).then(res => {
       if (res) {
         return res.dataValues
@@ -87,12 +80,11 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
   try {
 
     const {
-      githubLinks,
       Users,
       ...rest
     } = req.body;
     
-    await m.Project.update({
+    const project = await m.Project.update({
       rest
     }, {
       where: {
@@ -100,16 +92,9 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
       }
     });
 
-    const githubLinksToCreate = githubLinks.map(x => ({
-      projectId: rest.uuid,
-      link: x
-    }))
-    console.log(githubLinksToCreate)
-
-    await m.GithubLink.bulkCreate(githubLinksToCreate)
-
     res.send({
-      message: "Project updated!"
+      message: "Project updated!",
+      project
     })
   } catch (error) {
     next(error)
@@ -126,7 +111,7 @@ app.get('/:projectId', async(req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.GithubLink, m.User]
+      include: [m.ProjectLink, m.User]
     }).then(res => {
       if (res) {
         return res.dataValues

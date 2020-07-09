@@ -1,5 +1,4 @@
 const Comment = require('./Comment')
-const GithubLink = require('./GithubLink')
 const Project = require('./Project')
 const ProjectImage = require('./ProjectImage')
 const ProjectLink = require('./ProjectLink')
@@ -28,11 +27,6 @@ const m = sequelize.models
 m.User.hasMany(Project, {
   onDelete: "CASCADE",
   foreignKey: "userId"
-})
-
-m.Project.hasMany(GithubLink, {
-  onDelete: "CASCADE",
-  foreignKey: "projectId"
 })
 
 m.User.hasMany(ProjectRole, {
