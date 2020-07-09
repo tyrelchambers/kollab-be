@@ -34,8 +34,6 @@ const checkJwt = async (req, res, next) => {
           expiresIn: "1d"
         });
 
-        console.log(payload)
-
         req.headers.token = token
       }
     });

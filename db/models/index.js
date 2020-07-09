@@ -30,9 +30,9 @@ m.User.hasMany(Project, {
   foreignKey: "userId"
 })
 
-m.User.hasMany(GithubLink, {
+m.Project.hasMany(GithubLink, {
   onDelete: "CASCADE",
-  foreignKey: "userId"
+  foreignKey: "projectId"
 })
 
 m.User.hasMany(ProjectRole, {
