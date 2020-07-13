@@ -18,14 +18,8 @@ const ProjectRole = sequelize.define("ProjectRole", {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
-  userId: {
-    type: DataTypes.UUID,
-    references: {
-      model: User,
-      key: 'uuid',
-      deferrable: Deferrable.INITIALLY_IMMEDIATE
-    }
-  },
+  experience: DataTypes.STRING,
+  description: DataTypes.STRING,
   projectId: {
     type: DataTypes.UUID,
     references: {

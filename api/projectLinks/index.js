@@ -11,14 +11,14 @@ app.post('/', authHandler, async (req, res, next) => {
       projectId
     } = req.body;
 
-    const linksToCreate = projectLinks.map(x => {
-      if (!x.uuid) {
-        return {
-          projectId,
-          link: x.link
-        }
+    const linksToCreate = projectLinks.reduce((result, item )=> {
+      if (!item.uuid) {
+        result.push({link: item.link, projectId: projectId})
       }
-    })
+
+      return result
+    }, [])
+
    await m.ProjectLink.bulkCreate(linksToCreate)
 
     res.sendStatus(200)

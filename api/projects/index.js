@@ -69,7 +69,7 @@ app.get('/:projectId/edit', authHandler, async (req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.ProjectLink, m.User]
+      include: [m.ProjectLink, m.User, m.ProjectRole]
     }).then(res => {
       if (res) {
         return res.dataValues
@@ -86,12 +86,12 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
   try {
 
     const {
-      Users,
+      User,
       ...rest
     } = req.body;
-    
+
     await m.Project.update({
-      rest
+      ...rest
     }, {
       where: {
         uuid: rest.uuid

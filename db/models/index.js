@@ -1,9 +1,9 @@
+const User = require('./User')
 const Comment = require('./Comment')
 const Project = require('./Project')
 const ProjectImage = require('./ProjectImage')
 const ProjectLink = require('./ProjectLink')
 const ProjectRole = require('./ProjectRole')
-const User = require('./User')
 const sequelize = require('../index.js')
 
 const fn = async () => {
@@ -27,6 +27,11 @@ const m = sequelize.models
 m.User.hasMany(Project, {
   onDelete: "CASCADE",
   foreignKey: "userId"
+})
+
+m.Project.belongsTo(User, {
+  foreignKey: "userId"
+
 })
 
 m.User.hasMany(ProjectRole, {
