@@ -1,7 +1,7 @@
 const express = require('express')
 const { authHandler } = require('../../middleware/middleware')
 
-const app = express.Router;
+const app = express.Router();
 
 app.post('/', authHandler, async (req,res,next) => {
   try {
@@ -10,15 +10,17 @@ app.post('/', authHandler, async (req,res,next) => {
       projectId
     } = req.body
 
-    const positionsToCreate = positions.reduce((result, item )=> {
-      if (!item.uuid) {
-        result.push({...item, projectId: projectId})
-      }
+    if (positions.length) {
+      const positionsToCreate = positions.reduce((result, item) => {
+        if (!item.uuid) {
+          result.push({ ...item, projectId: projectId })
+        }
 
-      return result
-    }, [])
+        return result
+      }, [])
 
-   await m.Collaborators.bulkCreate(positionsToCreate)
+      await m.ProjectRole.bulkCreate(positionsToCreate)
+    }
 
     res.sendStatus(200)
   } catch (error) {

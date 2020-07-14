@@ -30,8 +30,8 @@ m.User.hasMany(Project, {
 })
 
 m.Project.belongsTo(User, {
-  foreignKey: "userId"
-
+  foreignKey: "userId",
+  as: 'owner'
 })
 
 m.User.hasMany(ProjectRole, {
@@ -60,12 +60,14 @@ m.Project.hasMany(Comment, {
 
 m.Project.belongsToMany(User, {
   through: "Collaborators",
-  foreignKey: "projectId"
+  foreignKey: "projectId",
+  as: 'collaborators'
 })
 
 m.User.belongsToMany(Project, {
   through: "Collaborators",
-  foreignKey: "userId"
+  foreignKey: "userId",
+  as: 'involves'
 })
 
 module.exports = m

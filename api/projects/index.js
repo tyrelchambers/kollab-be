@@ -69,7 +69,7 @@ app.get('/:projectId/edit', authHandler, async (req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.ProjectLink, m.User, m.ProjectRole]
+      include: [m.ProjectLink, 'owner', m.ProjectRole, 'collaborators']
     }).then(res => {
       if (res) {
         return res.dataValues
@@ -116,7 +116,7 @@ app.get('/:projectId', async(req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.ProjectLink, m.User]
+      include: [m.ProjectLink, 'owner']
     }).then(res => {
       if (res) {
         return res.dataValues

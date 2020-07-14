@@ -1,6 +1,5 @@
 const { DataTypes, Deferrable } = require('sequelize')
 const sequelize = require('../index')
-const User = require('./User')
 const Project = require('./Project')
 
 const ProjectRole = sequelize.define("ProjectRole", {
