@@ -8,7 +8,7 @@ const ProjectRole = sequelize.define("ProjectRole", {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  role: {
+  title: {
     type: DataTypes.STRING,
     required: true,
     allowNull: false

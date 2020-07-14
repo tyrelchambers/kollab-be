@@ -1,5 +1,6 @@
 const express = require('express')
-const { authHandler } = require('../../middleware/middleware')
+const { authHandler } = require('../../middleware/middleware');
+const m = require('../../db/models');
 
 const app = express.Router();
 
@@ -28,4 +29,21 @@ app.post('/', authHandler, async (req,res,next) => {
   }
 })
 
+app.delete('/:roleId', authHandler, async (req, res, next) => {
+  try {
+    const {
+      roleId
+    } = req.params;
+
+    await m.ProjectRole.destroy({
+      where: {
+        uuid: roleId
+      }
+    })
+
+    res.send({message: 'Role deleted!'})
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = app
