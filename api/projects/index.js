@@ -116,7 +116,7 @@ app.get('/:projectId', async(req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.ProjectLink, 'owner']
+      include: [m.ProjectLink, 'owner', m.ProjectRole, 'collaborators']
     }).then(res => {
       if (res) {
         return res.dataValues
@@ -129,4 +129,21 @@ app.get('/:projectId', async(req, res, next) => {
   }
 })
 
+app.delete('/:projectId', authHandler, async (req, res, next) => {
+  try {
+    const {
+      projectId
+    } = req.params;
+
+    await m.Project.destroy({
+      where: {
+        uuid: projectId
+      }
+    })
+
+    res.send({message: "Project deleted"})
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = app;

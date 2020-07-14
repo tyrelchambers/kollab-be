@@ -18,7 +18,7 @@ const ProjectRole = sequelize.define("ProjectRole", {
     defaultValue: false
   },
   experience: DataTypes.STRING,
-  description: DataTypes.STRING,
+  description: DataTypes.TEXT,
   projectId: {
     type: DataTypes.UUID,
     references: {

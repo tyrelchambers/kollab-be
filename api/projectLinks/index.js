@@ -27,4 +27,23 @@ app.post('/', authHandler, async (req, res, next) => {
   }
 })
 
+app.delete('/:linkId', authHandler, async (req,res,next) => {
+  try {
+    const { 
+      linkId
+    } = req.params;
+
+    await m.ProjectLink.destroy({
+      where: {
+        uuid: linkId
+      }
+    })
+
+    res.send({message: "Link removed!"})
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = app;
