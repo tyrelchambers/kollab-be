@@ -166,8 +166,6 @@ app.get('/:projectId', async(req, res, next) => {
       ]
     })
 
-    console.log(project.approvalRatio, '####')
-
     res.send(project.dataValues)
   } catch (error) {
     next(error)
