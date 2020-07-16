@@ -23,10 +23,6 @@ const Project = sequelize.define("Project", {
       len: [50, 500]
     }
   },
-  likes: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
-  },
   thumbnailUrl: {
     type: DataTypes.STRING,
     defaultValue: 'https://arcanumdeepsecrets.files.wordpress.com/2010/06/blast_500x500.jpg'

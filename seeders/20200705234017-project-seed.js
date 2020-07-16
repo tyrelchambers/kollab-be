@@ -13,6 +13,7 @@ for (let i = 0; i<5; i++) {
     thumbnailUrl: faker.image.imageUrl(),
     topics: `${faker.lorem.word()},${faker.lorem.word()},${faker.lorem.word()}`,
     likes: faker.random.number(),
+    dislikes: faker.random.number(),
     openPositions: true,
     createdAt: new Date(Date.now()),
     updatedAt: new Date(Date.now())

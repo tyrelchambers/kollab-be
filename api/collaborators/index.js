@@ -27,4 +27,24 @@ app.post('/', authHandler, async (req, res, next) => {
   }
 })
 
+app.delete('/', authHandler, async (req,res,next) => {
+  try {
+    const {
+      projectId,
+      userId
+    } = req.query;
+
+    await m.Collaborators.destroy({
+      where: {
+        projectId,
+        userId
+      }
+    })
+
+    res.send({message: "Collaborator removed"})
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = app;

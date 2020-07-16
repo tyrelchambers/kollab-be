@@ -6,7 +6,9 @@ const app = express.Router();
 
 app.get('/all', async ( req, res, next ) => {
   try {
-    const projects = await m.Project.findAll();
+    const projects = await m.Project.findAll({
+      include: ['likers']
+    });
     projects.map(x => x.dataValues)
 
     res.send(projects)
@@ -59,6 +61,42 @@ app.post("/new", authHandler, async (req, res, next) => {
   }
 })
 
+app.put('/:projectId/like', authHandler, async (req, res, next) => {
+  try {
+    const {
+      projectId
+    } = req.params
+
+    await m.ProjectLikes.create({
+      projectId,
+      userId: res.locals.userId
+    })
+
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/:projectId/dislike', authHandler, async (req, res, next) => {
+  try {
+    const {
+      projectId
+    } = req.params
+
+    await m.ProjectDislikes.create({
+      projectId,
+      userId: res.locals.userId
+    })
+
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.get('/:projectId/edit', authHandler, async (req, res, next) => {
   try {
     const {
@@ -106,6 +144,8 @@ app.put('/:projectId/edit', authHandler, async(req, res, next) => {
   }
 })
 
+
+
 app.get('/:projectId', async(req, res, next) => {
   try {
     const {
@@ -116,14 +156,19 @@ app.get('/:projectId', async(req, res, next) => {
       where:{
         uuid: projectId
       },
-      include: [m.ProjectLink, 'owner', m.ProjectRole, 'collaborators']
-    }).then(res => {
-      if (res) {
-        return res.dataValues
-      }
+      include: [
+        m.ProjectLink, 
+        'owner', 
+        m.ProjectRole, 
+        'collaborators',
+        'likers',
+        'dislikers'
+      ]
     })
 
-    res.send(project)
+    console.log(project.approvalRatio, '####')
+
+    res.send(project.dataValues)
   } catch (error) {
     next(error)
   }

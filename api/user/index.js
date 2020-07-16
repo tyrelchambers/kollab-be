@@ -31,7 +31,10 @@ app.get('/projects', authHandler, async (req, res, next) => {
     const projects = await m.Project.findAll({
       where: {
         userId: res.locals.userId
-      }
+      },
+      include: [
+        'likers'
+      ]
     });
 
     projects.map(x => x.dataValues)

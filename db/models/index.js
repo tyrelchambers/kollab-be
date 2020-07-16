@@ -64,10 +64,34 @@ m.Project.belongsToMany(User, {
   as: 'collaborators'
 })
 
+m.Project.belongsToMany(User, {
+  through: "ProjectLikes",
+  foreignKey: 'projectId',
+  as: 'likers'
+})
+
+m.Project.belongsToMany(User, {
+  through: "ProjectDislikes",
+  foreignKey: 'projectId',
+  as: 'dislikers'
+})
+
 m.User.belongsToMany(Project, {
   through: "Collaborators",
   foreignKey: "userId",
-  as: 'involves'
+  as: 'involvedWith'
+})
+
+m.User.belongsToMany(Project, {
+  through: "ProjectLikes",
+  foreignKey: "userId",
+  as: "likedProjects"
+})
+
+m.User.belongsToMany(Project, {
+  through: "ProjectDislikes",
+  foreignKey: "userId",
+  as: "dislikedProjects"
 })
 
 module.exports = m
