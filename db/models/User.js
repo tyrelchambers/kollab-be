@@ -13,6 +13,7 @@ const User = sequelize.define("User", {
   username: {
     type: DataTypes.STRING,
     unique: true,
+    defaultValue: `${this.firstName}_${this.lastName}${Math.random() * (0 - 999) + 0}${Math.random() * (0 - 999) + 0}${Math.random() * (0 - 999) + 0}`
   },
   email: {
     type: DataTypes.STRING,

@@ -1,19 +1,19 @@
 const { DataTypes, Deferrable } = require('sequelize')
 const sequelize = require('../index')
-const Project = require('./Project')
+const CommentParent = require('./CommentParent')
 const User = require('./User')
 
-const Comment = sequelize.define("Comment", {
+const CommentReply = sequelize.define("CommentReply", {
   uuid: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  message: DataTypes.STRING,
-  projectId: {
+  comment: DataTypes.TEXT,
+  commentParentId: {
     type: DataTypes.UUID,
     references: {
-      model: Project,
+      model: CommentParent,
       key: 'uuid',
       deferrable: Deferrable.INITIALLY_IMMEDIATE
     }
@@ -24,9 +24,8 @@ const Comment = sequelize.define("Comment", {
       model: User,
       key: 'uuid',
       deferrable: Deferrable.INITIALLY_IMMEDIATE
-
     }
   }
 })
 
-module.exports = Comment
+module.exports = CommentReply

@@ -1,10 +1,11 @@
 const User = require('./User')
-const Comment = require('./Comment')
 const Project = require('./Project')
 const ProjectImage = require('./ProjectImage')
 const ProjectLink = require('./ProjectLink')
 const ProjectRole = require('./ProjectRole')
 const sequelize = require('../index.js')
+const CommentParent = require('./CommentParent')
+const CommentReply = require('./CommentReply')
 
 const fn = async () => {
   await sequelize.sync()
@@ -53,7 +54,7 @@ m.Project.hasMany(ProjectLink, {
   foreignKey: "projectId"
 })
 
-m.Project.hasMany(Comment, {
+m.Project.hasMany(CommentParent, {
   onDelete: "CASCADE",
   foreignKey: 'projectId'
 })
@@ -92,6 +93,24 @@ m.User.belongsToMany(Project, {
   through: "ProjectDislikes",
   foreignKey: "userId",
   as: "dislikedProjects"
+})
+
+m.CommentParent.belongsTo(Project, {
+  onDelete: 'CASCADE',
+  foreignKey: 'commentParentId'
+})
+
+m.CommentParent.hasMany(CommentReply, {
+  onDelete: 'CASCADE',
+  foreignKey: 'commentParentId'
+})
+
+m.CommentParent.belongsTo(User, {
+  foreignKey:'userId'
+})
+
+m.CommentReply.belongsTo(User, {
+  foreignKey: 'userId'
 })
 
 module.exports = m
