@@ -9,16 +9,23 @@ app.get('/all', authHandler, async (req, res, next) => {
     const {
       projectId
     } = req.query;
-    console.log(projectId)
 
-    const comments = await m.CommentParent.findAll({
+    const comments = await m.Comment.findAll({
       where:{
         projectId
       },
+      order: [
+        ['createdAt','DESC']
+      ],
+      attributes: ['comment', 'uuid'],
       include: [{
-        model: m.CommentReply,
-        include: [m.User]
-      }, m.User]
+        model: m.Comment,
+        as: 'Replies',
+        include: [m.User, 'likers'],
+        order: [
+          ['createdAt', 'DESC']
+        ],
+      }, m.User, 'likers']
     })
 
     res.send(comments)
@@ -27,45 +34,48 @@ app.get('/all', authHandler, async (req, res, next) => {
   }
 })
 
-app.post('/commentParent', authHandler, async (req, res, next) => {
+app.post('/new', authHandler, async (req, res, next) => {
   try {
     const {
       comment,
-      projectId
-    } = req.body;
-
-    const commentParent = await m.CommentParent.create({
-      comment,
       projectId,
-      userId: res.locals.userId
+      parentId
+    } = req.body
+
+    const newComment = await m.Comment.create({
+      userId: res.locals.userId,
+      comment,
+      projectId
     })
 
+    if (parentId) {
+      await m.CommentReplies.create({
+        CommentId: parentId,
+        CommentReplyId: newComment.uuid
+      })
+    }
+
+
     res.send({
-      commentParent,
-      message: "Comment posted!"
+      message: "Posted your reply!"
     })
   } catch (error) {
     next(error)
   }
 })
 
-app.post('/commentReply', authHandler, async (req, res, next) => {
+app.put('/:commentId/like', authHandler, async (req, res, next) => {
   try {
     const {
-      parentId,
-      comment
-    } = req.body;
+      commentId
+    } = req.params;
 
-    const commentReply = await m.CommentReply.create({
-      comment,
-      commentParentId: parentId,
-      userId: res.locals.userId
+    await m.CommentLikes.create({
+      userId: res.locals.userId,
+      commentId
     })
 
-    res.send({
-      comment: commentReply,
-      message: "Posted your reply!"
-    })
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }

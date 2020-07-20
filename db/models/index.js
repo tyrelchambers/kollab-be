@@ -4,8 +4,7 @@ const ProjectImage = require('./ProjectImage')
 const ProjectLink = require('./ProjectLink')
 const ProjectRole = require('./ProjectRole')
 const sequelize = require('../index.js')
-const CommentParent = require('./CommentParent')
-const CommentReply = require('./CommentReply')
+const Comment = require('./Comment')
 
 const fn = async () => {
   await sequelize.sync()
@@ -54,9 +53,12 @@ m.Project.hasMany(ProjectLink, {
   foreignKey: "projectId"
 })
 
-m.Project.hasMany(CommentParent, {
+m.Project.hasMany(Comment, {
   onDelete: "CASCADE",
-  foreignKey: 'projectId'
+  foreignKey: {
+    name: 'projectId',
+    allowNull: true
+  }
 })
 
 m.Project.belongsToMany(User, {
@@ -95,22 +97,35 @@ m.User.belongsToMany(Project, {
   as: "dislikedProjects"
 })
 
-m.CommentParent.belongsTo(Project, {
-  onDelete: 'CASCADE',
-  foreignKey: 'commentParentId'
-})
-
-m.CommentParent.hasMany(CommentReply, {
-  onDelete: 'CASCADE',
-  foreignKey: 'commentParentId'
-})
-
-m.CommentParent.belongsTo(User, {
-  foreignKey:'userId'
-})
-
-m.CommentReply.belongsTo(User, {
+m.Comment.belongsTo(User, {
+  onDelete:'CASCADE',
   foreignKey: 'userId'
+})
+
+m.Comment.belongsToMany(Comment, {
+  through: "CommentReplies",
+  foreignKey: "CommentId",
+  as: 'Replies',
+  otherKey: "CommentReplyId"
+})
+
+m.Comment.belongsToMany(Comment, {
+  through: "CommentReplies",
+  foreignKey: "CommentReplyId",
+  as: 'Parent',
+  otherKey: "CommentId"
+})
+
+m.User.belongsToMany(Comment, {
+  through: 'CommentLikes',
+  foreignKey: 'userId',
+  as: 'likedComments'
+})
+
+m.Comment.belongsToMany(User, {
+  through: 'CommentLikes',
+  foreignKey: 'commentId',
+  as: 'likers'
 })
 
 module.exports = m
