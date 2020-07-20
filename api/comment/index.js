@@ -81,4 +81,23 @@ app.put('/:commentId/like', authHandler, async (req, res, next) => {
   }
 })
 
+app.delete('/:commentId/dislike', authHandler, async (req, res, next) => {
+  try {
+    const {
+      commentId
+    } = req.params;
+
+    await m.CommentLikes.destroy({
+      where: {
+        commentId,
+        userId: res.locals.userId
+      }
+    })
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = app;
