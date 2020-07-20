@@ -15,16 +15,12 @@ app.get('/all', authHandler, async (req, res, next) => {
         projectId
       },
       order: [
-        ['createdAt','DESC']
+        ['Replies', 'createdAt','DESC']
       ],
-      attributes: ['comment', 'uuid'],
       include: [{
         model: m.Comment,
         as: 'Replies',
-        include: [m.User, 'likers'],
-        order: [
-          ['createdAt', 'DESC']
-        ],
+        include: [m.User, 'likers']
       }, m.User, 'likers']
     })
 
