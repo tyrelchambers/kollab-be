@@ -12,8 +12,7 @@ const User = sequelize.define("User", {
   lastName: DataTypes.STRING,
   username: {
     type: DataTypes.STRING,
-    unique: true,
-    defaultValue: `${this.firstName}_${this.lastName}${Math.random() * (0 - 999) + 0}${Math.random() * (0 - 999) + 0}${Math.random() * (0 - 999) + 0}`
+    unique: true
   },
   email: {
     type: DataTypes.STRING,
@@ -23,6 +22,10 @@ const User = sequelize.define("User", {
     validate: {
       isEmail: true
     }
+  },
+  useUsername: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   password: DataTypes.STRING,
   twitter: DataTypes.STRING,
@@ -41,7 +44,12 @@ const User = sequelize.define("User", {
   }
 
 }, {
-  timestamps: true
+  timestamps: true,
+  hooks: {
+    afterCreate: (user, options) => {
+      user.username = `${user.firstName}_${user.lastName}${Math.random() * (0 - 999) + 0}`
+    }
+  }
 })
 
 module.exports = User
