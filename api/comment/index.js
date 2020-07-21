@@ -96,4 +96,24 @@ app.delete('/:commentId/dislike', authHandler, async (req, res, next) => {
   }
 })
 
+app.delete('/:commentId', authHandler, async (req, res, next) => {
+  try {
+    const {
+      commentId
+    } = req.params;
+
+    await m.Comment.destroy({
+      where: {
+        uuid: commentId,
+        userId: res.locals.userId
+      }
+    })
+
+    res.send({
+      message: "Comment deleted!"
+    })
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = app;
