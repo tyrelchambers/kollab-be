@@ -26,6 +26,44 @@ app.get('/me', authHandler , async (req, res, next) => {
   }
 })
 
+app.put('/me', authHandler, async (req, res, next) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      username,
+      useUsername,
+      twitter,
+      stackOverflow,
+      instagram,
+      github,
+      gitlab
+    } = req.body;
+
+    await m.User.update({
+      firstName,
+      lastName,
+      username,
+      useUsername,
+      twitter,
+      stackOverflow,
+      instagram,
+      github,
+      gitlab
+    }, {
+      where: {
+        uuid: res.locals.userId
+      }
+    })
+
+    res.send({
+      message: "Profile updated"
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.get('/projects', authHandler, async (req, res, next) => {
   try {
     const projects = await m.Project.findAll({
