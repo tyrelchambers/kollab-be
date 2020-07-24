@@ -61,35 +61,74 @@ app.post("/new", authHandler, async (req, res, next) => {
   }
 })
 
-app.put('/:projectId/like', authHandler, async (req, res, next) => {
+app.put('/:projectId/:approval', authHandler, async (req, res, next) => {
   try {
     const {
-      projectId
+      projectId,
+      approval
     } = req.params
 
-    await m.ProjectLikes.create({
-      projectId,
-      userId: res.locals.userId
+    const likeExists = await m.ProjectLikes.findOne({
+      where: {
+        userId: res.locals.userId
+      }
+    }).then(res => {
+      if (res) {
+        return res.dataValues
+      }
     })
 
-
-    res.sendStatus(200)
-  } catch (error) {
-    next(error)
-  }
-})
-
-app.put('/:projectId/dislike', authHandler, async (req, res, next) => {
-  try {
-    const {
-      projectId
-    } = req.params
-
-    await m.ProjectDislikes.create({
-      projectId,
-      userId: res.locals.userId
+    const dislikeExists = await m.ProjectDislikes.findOne({
+      where: {
+        userId: res.locals.userId
+      }
+    }).then(res => {
+      if (res) {
+        return res.dataValues
+      }
     })
 
+    if (likeExists && approval === "dislike") {
+      await m.ProjectLikes.destroy({
+        where: {
+          projectId,
+          userId: res.locals.userId
+        }
+      })
+
+      await m.ProjectDislikes.create({
+        projectId,
+        userId: res.locals.userId
+      })
+    } 
+
+    if (dislikeExists && approval === "like") {
+      await m.ProjectDislikes.destroy({
+        where: {
+          projectId,
+          userId: res.locals.userId
+        }
+      })
+
+      await m.ProjectLikes.create({
+        projectId,
+        userId: res.locals.userId
+      })
+    } 
+
+    if (!dislikeExists && !likeExists && approval === "like") {
+      await m.ProjectLikes.create({
+        projectId,
+        userId: res.locals.userId
+      })
+    } 
+
+    if (!dislikeExists && !likeExists && approval === "dislike") {
+      await m.ProjectDislikes.create({
+        projectId,
+        userId: res.locals.userId
+      })
+    }
 
     res.sendStatus(200)
   } catch (error) {
@@ -162,7 +201,8 @@ app.get('/:projectId', async(req, res, next) => {
         m.ProjectRole, 
         'collaborators',
         'likers',
-        'dislikers'
+        'dislikers',
+        m.Comment
       ]
     })
 

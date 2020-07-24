@@ -8,8 +8,7 @@ const User = sequelize.define("User", {
     primaryKey: true
   },
   avatar: DataTypes.STRING,
-  firstName: DataTypes.STRING,
-  lastName: DataTypes.STRING,
+  name: DataTypes.STRING,
   username: {
     type: DataTypes.STRING,
     unique: true
@@ -22,10 +21,6 @@ const User = sequelize.define("User", {
     validate: {
       isEmail: true
     }
-  },
-  useUsername: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
   },
   password: DataTypes.STRING,
   twitter: DataTypes.STRING,

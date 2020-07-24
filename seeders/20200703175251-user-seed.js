@@ -7,8 +7,7 @@ const sampleUsers = []
 for (let i = 0; i<5; i++) {
   sampleUsers.push({
     uuid: uuid(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
+    name: `${faker.name.firstName()} ${faker.name.lastName()}`,
     username: faker.internet.userName(),
     email: `tychambers${i}@gmail.com`,
     twitter: faker.internet.userName(),

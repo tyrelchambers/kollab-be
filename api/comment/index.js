@@ -24,6 +24,7 @@ app.get('/all', authHandler, async (req, res, next) => {
       }, m.User, 'likers']
     })
 
+
     res.send(comments)
   } catch (error) {
     next(error)
