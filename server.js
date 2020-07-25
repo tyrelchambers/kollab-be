@@ -12,6 +12,7 @@ const projectLinks = require('./api/projectLinks/index')
 const projectRole = require('./api/projectRole/index')
 const collaborators = require('./api/collaborators/index')
 const comments = require('./api/comment/index')
+const github = require('./api/github/index')
 
 const { checkJwt } = require('./middleware/middleware')
 require('dotenv').config();
@@ -40,6 +41,7 @@ app.use('/api/projectLinks', projectLinks)
 app.use('/api/projectRoles', projectRole)
 app.use('/api/collaborators', collaborators)
 app.use('/api/comments', comments);
+app.use('/api/callback/github', github)
 
 app.use(function (err, req, res, next) {
   console.error(err.message)

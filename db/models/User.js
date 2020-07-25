@@ -29,6 +29,7 @@ const User = sequelize.define("User", {
   github: DataTypes.STRING,
   gitlab: DataTypes.STRING,
   googleSigninToken: DataTypes.STRING,
+  githubAccessToken: DataTypes.STRING,
   profileSetupStage: {
     type: DataTypes.STRING,
     defaultValue: "notStarted"
