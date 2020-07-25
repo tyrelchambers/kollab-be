@@ -37,7 +37,8 @@ app.put('/me', authHandler, async (req, res, next) => {
       stackOverflow,
       instagram,
       github,
-      gitlab
+      gitlab,
+      availableToHelp
     } = req.body;
 
     await m.User.update({
@@ -49,7 +50,8 @@ app.put('/me', authHandler, async (req, res, next) => {
       stackOverflow,
       instagram,
       github,
-      gitlab
+      gitlab,
+      availableToHelp
     }, {
       where: {
         uuid: res.locals.userId

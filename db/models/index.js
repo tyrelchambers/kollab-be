@@ -128,4 +128,16 @@ m.Comment.belongsToMany(User, {
   as: 'likers'
 })
 
+m.User.belongsToMany(User, {
+  through: "Followers",
+  foreignKey: "followerId",
+  as: "followers",
+})
+
+m.User.belongsToMany(User, {
+  through: "Followings",
+  foreignKey: "followingId",
+  as: 'followings'
+})
+
 module.exports = m
