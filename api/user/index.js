@@ -85,6 +85,45 @@ app.get('/projects', authHandler, async (req, res, next) => {
   }
 })
 
+app.get('/all', async (req, res, next) => {
+  try {
+    const users = await m.User.findAll({
+      where: {
+        ...req.query
+      },
+      attributes: {
+        exclude: ["password"]
+      }
+    })
+
+    res.send(users)
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/username/:username', authHandler, async (req, res, next) => {
+  try {
+    const {
+      username
+    } = req.params
+
+    const user = await m.User.findOne({
+      where: {
+        username
+      },
+      attributes: {
+        exclude: ['password']
+      }
+    })
+
+    res.send(user)
+
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.get('/:email', authHandler, async (req, res, next) => {
   try {
     const {
@@ -113,6 +152,8 @@ app.get('/:email', authHandler, async (req, res, next) => {
     next(error)
   }
 })
+
+
 
 
 
