@@ -15,12 +15,21 @@ const comments = require('./api/comment/index')
 const github = require('./api/github/index')
 const search = require('./api/search/index')
 
+require('./jobs/featureProject')
+
 const { checkJwt } = require('./middleware/middleware')
 require('dotenv').config();
 
 const port = process.env.PORT || '4000';
 
 const app = express();
+
+const currentDay = (req, res, next) => {
+  let date = new Date(Date.now())
+  res.locals.currentDay = date
+
+  next()
+}
 
 app.use(cors());
 
@@ -33,6 +42,7 @@ app.use(bodyParser.urlencoded({
 app.use(expressSanitizer());
 
 app.use(checkJwt)
+app.use(currentDay)
 
 app.use('/api/auth', auth)
 app.use('/api/user', user);

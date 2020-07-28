@@ -73,11 +73,13 @@ app.get('/projects', authHandler, async (req, res, next) => {
         userId: res.locals.userId
       },
       include: [
-        'likers'
+        'likers',
+        m.Comment
+      ],
+      order: [
+        ['createdAt', 'DESC']
       ]
     });
-
-    projects.map(x => x.dataValues)
 
     res.send(projects)
   } catch (error) {

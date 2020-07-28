@@ -32,6 +32,22 @@ const Project = sequelize.define("Project", {
     type: DataTypes.BOOLEAN,
     defaultValue: true
   },
+  score: {
+    type: DataTypes.INTEGER,
+    defaultValue: 100
+  },
+  deprecatedScore: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  views: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  wasFeatured: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   userId: {
     type: DataTypes.UUID,
     references: {
