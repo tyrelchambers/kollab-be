@@ -33,14 +33,22 @@ const Project = sequelize.define("Project", {
     defaultValue: true
   },
   score: {
-    type: DataTypes.INTEGER,
-    defaultValue: 100
+    type: DataTypes.FLOAT(4,2),
+    defaultValue: 0
   },
   deprecatedScore: {
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
   views: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  likes: {
+    type: DataTypes.INTEGER,
+    defaultValue:0
+  },
+  dislikes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
   },

@@ -5,6 +5,7 @@ const ProjectLink = require('./ProjectLink')
 const ProjectRole = require('./ProjectRole')
 const sequelize = require('../index.js')
 const Comment = require('./Comment')
+const Featured = require('./Featured')
 
 const fn = async () => {
   await sequelize.sync()
@@ -138,6 +139,10 @@ m.User.belongsToMany(User, {
   through: "Followings",
   foreignKey: "followingId",
   as: 'followings'
+})
+
+m.Featured.belongsTo(Project, {
+  foreignKey: 'projectId'
 })
 
 module.exports = m

@@ -14,6 +14,7 @@ const collaborators = require('./api/collaborators/index')
 const comments = require('./api/comment/index')
 const github = require('./api/github/index')
 const search = require('./api/search/index')
+const featured = require('./api/featured/index')
 
 require('./jobs/featureProject')
 
@@ -54,6 +55,7 @@ app.use('/api/collaborators', collaborators)
 app.use('/api/comments', comments);
 app.use('/api/callback/github', github)
 app.use('/api/search', search)
+app.use('/api/featured', featured)
 
 app.use(function (err, req, res, next) {
   console.error(err.message)
