@@ -9,14 +9,6 @@ app.use('/:query', async (req, res, next) => {
       query
     } = req.params;
 
-    const users = await m.User.findAll({
-      where: {
-        username: {
-          [Op.iLike]: `%${query}%`
-        }
-      }
-    })
-
     const projects = await m.Project.findAll({
       where: {
         title: {
@@ -25,10 +17,7 @@ app.use('/:query', async (req, res, next) => {
       }
     })
 
-    res.send({
-      users,
-      projects
-    })
+    res.send(projects)
   } catch (error) {
     next(error)
   }

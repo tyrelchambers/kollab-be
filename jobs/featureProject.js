@@ -4,7 +4,7 @@ const faker = require("faker");
 
 const CronJob = require('cron').CronJob
 
-var selectFeatured = new CronJob('1/2 * * * * *', async function () {
+var selectFeatured = new CronJob('0 0 0 * * *', async function () {
   const findProject = async score => {
     await m.Project.findAll({
       where: {
@@ -31,9 +31,9 @@ var selectFeatured = new CronJob('1/2 * * * * *', async function () {
 
   findProject(16)
 
-}, null, false, 'America/Toronto');
+}, null, true, 'America/Toronto');
 
-const updateProjectScores = new CronJob('1/10 * * * * *', async () => {
+const updateProjectScores = new CronJob('0 0 0 * * *', async () => {
   m.Project.findAll({}).then(records => {
     for(let i = 0; i < records.length; i++) {
       records[i].update({
@@ -41,4 +41,4 @@ const updateProjectScores = new CronJob('1/10 * * * * *', async () => {
       })
     } 
   })
-}, null, false, 'America/Toronto')
+}, null, true, 'America/Toronto')
