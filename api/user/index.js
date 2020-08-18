@@ -74,7 +74,8 @@ app.get('/projects', authHandler, async (req, res, next) => {
       },
       include: [
         'likers',
-        m.Comment
+        m.Comment,
+        'collaborators'
       ],
       order: [
         ['createdAt', 'DESC']

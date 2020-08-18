@@ -8,7 +8,7 @@ app.get('/all', async ( req, res, next ) => {
   try {
 
     const projects = await m.Project.findAll({
-      include: ['likers', m.Comment],
+      include: ['likers', m.Comment,'collaborators'],
       order: [
         ['createdAt', 'DESC']
       ]
