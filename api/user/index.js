@@ -1,11 +1,15 @@
 const express = require('express')
 const m = require('../../db/models/index');
-const { authHandler } = require('../../middleware/middleware');
-const { Op } = require('sequelize');
+const {
+  authHandler
+} = require('../../middleware/middleware');
+const {
+  Op
+} = require('sequelize');
 
 const app = express.Router();
 
-app.get('/me', authHandler , async (req, res, next) => {
+app.get('/me', authHandler, async (req, res, next) => {
   try {
     const user = await m.User.findOne({
       where: {
@@ -92,11 +96,12 @@ app.get('/all', async (req, res, next) => {
   try {
     const users = await m.User.findAll({
       where: {
-        ...req.query
+        availableToHelp: req.query.availableToHelp
       },
       attributes: {
         exclude: ["password"]
-      }
+      },
+      limit: req.query.limit
     })
 
     res.send(users)
@@ -139,7 +144,7 @@ app.get('/:email', authHandler, async (req, res, next) => {
           [Op.substring]: email
         },
         uuid: {
-          [Op.not] : res.locals.userId
+          [Op.not]: res.locals.userId
         }
       },
       attributes: {

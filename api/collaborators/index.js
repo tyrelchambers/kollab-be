@@ -1,7 +1,11 @@
 const express = require('express')
-const { authHandler } = require('../../middleware/middleware');
+const {
+  authHandler
+} = require('../../middleware/middleware');
 const m = require('../../db/models');
-const { Op } = require('sequelize');
+const {
+  Op
+} = require('sequelize');
 
 const app = express.Router()
 
@@ -12,7 +16,7 @@ app.post('/', authHandler, async (req, res, next) => {
       collaborators
     } = req.body;
 
-    for(let i = 0; i < collaborators.length; i++) {
+    for (let i = 0; i < collaborators.length; i++) {
       await m.Collaborators.findOrCreate({
         where: {
           projectId,
@@ -20,14 +24,14 @@ app.post('/', authHandler, async (req, res, next) => {
         }
       })
     }
-    
+
     res.sendStatus(200)
   } catch (error) {
     next(error)
   }
 })
 
-app.delete('/', authHandler, async (req,res,next) => {
+app.delete('/', authHandler, async (req, res, next) => {
   try {
     const {
       projectId,
@@ -41,7 +45,9 @@ app.delete('/', authHandler, async (req,res,next) => {
       }
     })
 
-    res.send({message: "Collaborator removed"})
+    res.send({
+      message: "Collaborator removed"
+    })
   } catch (error) {
     next(error)
   }
