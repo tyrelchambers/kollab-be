@@ -37,7 +37,6 @@ app.get('/top', async (req, res, next) => {
       limit: 5
     })
 
-    console.log(projects, '--------------------');
     res.send(projects)
   } catch (error) {
     next(error)

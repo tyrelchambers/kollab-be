@@ -70,22 +70,21 @@ app.get('/top', function _callee2(req, res, next) {
 
         case 3:
           projects = _context2.sent;
-          console.log(projects, '--------------------');
           res.send(projects);
-          _context2.next = 11;
+          _context2.next = 10;
           break;
 
-        case 8:
-          _context2.prev = 8;
+        case 7:
+          _context2.prev = 7;
           _context2.t0 = _context2["catch"](0);
           next(_context2.t0);
 
-        case 11:
+        case 10:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 8]]);
+  }, null, null, [[0, 7]]);
 });
 app.post("/new", authHandler, function _callee3(req, res, next) {
   var _req$body, title, headline, description, likes, thumbnail, topics, openPositions, collaborators, project, collaboratorsToCreate;
@@ -365,7 +364,7 @@ app.get("/:projectId", function _callee7(req, res, next) {
     }
   }, null, null, [[0, 8]]);
 });
-app.delete("/:projectId", authHandler, function _callee8(req, res, next) {
+app["delete"]("/:projectId", authHandler, function _callee8(req, res, next) {
   var projectId;
   return regeneratorRuntime.async(function _callee8$(_context8) {
     while (1) {
