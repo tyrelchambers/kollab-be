@@ -9,7 +9,9 @@
     "start": "nodemon server.js ",
     "seed": "NODE_ENV=test npx sequelize db:seed:all",
     "undo-seed": "NODE_ENV=test npx sequelize db:seed:undo:all",
-    "dev": "NODE_ENV=test npm run start"
+    "dev": "NODE_ENV=test npm run start",
+    "staging": "NODE_ENV=staging npm run start"
+
   },
   "keywords": [],
   "author": "",
