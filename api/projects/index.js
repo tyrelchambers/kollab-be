@@ -1,8 +1,6 @@
 const express = require("express");
 const m = require("../../db/models");
-const {
-  authHandler
-} = require("../../middleware/middleware");
+const { authHandler } = require("../../middleware/middleware");
 
 const app = express.Router();
 
@@ -11,9 +9,7 @@ app.get("/all", async (req, res, next) => {
     let limit = Number(req.query.limit) || 25;
     const projects = await m.Project.findAll({
       include: ["likers", m.Comment, "collaborators"],
-      order: [
-        ["createdAt", "DESC"]
-      ],
+      order: [["createdAt", "DESC"]],
     });
 
     const result = projects.slice(0, limit);
@@ -28,20 +24,18 @@ app.get("/all", async (req, res, next) => {
   }
 });
 
-app.get('/top', async (req, res, next) => {
+app.get("/top", async (req, res, next) => {
   try {
     const projects = await m.Project.findAll({
-      order: [
-        ["score", "DESC"]
-      ],
-      limit: 5
-    })
+      order: [["score", "DESC"]],
+      limit: 5,
+    });
 
-    res.send(projects)
+    res.send(projects);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 app.post("/new", authHandler, async (req, res, next) => {
   try {
@@ -56,18 +50,21 @@ app.post("/new", authHandler, async (req, res, next) => {
       collaborators,
     } = req.body;
 
-    const project = await m.Project.create({
-      title,
-      headline,
-      description,
-      likes,
-      thumbnail,
-      topics,
-      openPositions,
-      userId: res.locals.userId,
-    }, {
-      returning: true,
-    }).then((res) => {
+    const project = await m.Project.create(
+      {
+        title,
+        headline,
+        description,
+        likes,
+        thumbnail,
+        topics,
+        openPositions,
+        userId: res.locals.userId,
+      },
+      {
+        returning: true,
+      }
+    ).then((res) => {
       if (res) return res.dataValues;
     });
 
@@ -89,9 +86,7 @@ app.post("/new", authHandler, async (req, res, next) => {
 
 app.get("/:projectId/edit", authHandler, async (req, res, next) => {
   try {
-    const {
-      projectId
-    } = req.params;
+    const { projectId } = req.params;
 
     const project = await m.Project.findOne({
       where: {
@@ -112,18 +107,18 @@ app.get("/:projectId/edit", authHandler, async (req, res, next) => {
 
 app.put("/:projectId/edit", authHandler, async (req, res, next) => {
   try {
-    const {
-      User,
-      ...rest
-    } = req.body;
+    const { User, ...rest } = req.body;
 
-    await m.Project.update({
-      ...rest,
-    }, {
-      where: {
-        uuid: rest.uuid,
+    await m.Project.update(
+      {
+        ...rest,
       },
-    });
+      {
+        where: {
+          uuid: rest.uuid,
+        },
+      }
+    );
 
     res.send({
       message: "Project updated!",
@@ -135,10 +130,7 @@ app.put("/:projectId/edit", authHandler, async (req, res, next) => {
 
 app.put("/:projectId/:approval", authHandler, async (req, res, next) => {
   try {
-    const {
-      projectId,
-      approval
-    } = req.params;
+    const { projectId, approval } = req.params;
 
     const likeExists = await m.ProjectLikes.findOne({
       where: {
@@ -210,9 +202,7 @@ app.put("/:projectId/:approval", authHandler, async (req, res, next) => {
 
 app.get("/:projectId", async (req, res, next) => {
   try {
-    const {
-      projectId
-    } = req.params;
+    const { projectId } = req.params;
 
     const project = await m.Project.findOne({
       where: {
@@ -237,9 +227,7 @@ app.get("/:projectId", async (req, res, next) => {
 
 app.delete("/:projectId", authHandler, async (req, res, next) => {
   try {
-    const {
-      projectId
-    } = req.params;
+    const { projectId } = req.params;
 
     await m.Project.destroy({
       where: {
@@ -248,7 +236,7 @@ app.delete("/:projectId", authHandler, async (req, res, next) => {
     });
 
     res.send({
-      message: "Project deleted"
+      message: "Project deleted",
     });
   } catch (error) {
     next(error);

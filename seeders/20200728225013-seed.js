@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 const faker = require("faker");
 const { uuid } = require("uuidv4");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const sampleUsers = []
+    const sampleUsers = [];
 
-    const projectsSeed = []
+    const projectsSeed = [];
 
     for (let i = 0; i < 5; i++) {
       sampleUsers.push({
@@ -20,13 +20,16 @@ module.exports = {
         password: "123456",
         availableToHelp: false,
         createdAt: new Date(Date.now()),
-        updatedAt: new Date(Date.now())
-      })
+        updatedAt: new Date(Date.now()),
+        avatar: faker.image.imageUrl(),
+      });
     }
 
-    await queryInterface.bulkInsert('Users', sampleUsers)
+    await queryInterface.bulkInsert("Users", sampleUsers);
 
-    const users = await queryInterface.sequelize.query(`SELECT uuid FROM "Users";`)
+    const users = await queryInterface.sequelize.query(
+      `SELECT uuid FROM "Users";`
+    );
 
     for (let i = 0; i < 1000; i++) {
       projectsSeed.push({
@@ -44,18 +47,15 @@ module.exports = {
         openPositions: true,
         createdAt: new Date(Date.now()),
         updatedAt: new Date(Date.now()),
-        userId: users[0][0].uuid
-      })
+        userId: users[0][0].uuid,
+      });
     }
 
-    return queryInterface.bulkInsert('Projects', projectsSeed)
-
-
+    return queryInterface.bulkInsert("Projects", projectsSeed);
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.bulkDelete('Users', null, {})
-    return queryInterface.bulkDelete('Projects', null, {})
-
-  }
+    queryInterface.bulkDelete("Users", null, {});
+    return queryInterface.bulkDelete("Projects", null, {});
+  },
 };

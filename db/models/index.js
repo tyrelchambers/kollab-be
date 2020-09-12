@@ -149,4 +149,8 @@ m.User.hasMany(TimelinePost, {
   foreignKey: "userId",
 });
 
+m.TimelinePost.belongsTo(User, {
+  foreignKey: "userId",
+});
+
 module.exports = m;
