@@ -6,7 +6,7 @@ const app = express.Router();
 
 app.get("/all", async (req, res, next) => {
   try {
-    let limit = Number(req.query.limit) || 25;
+    let limit = Number(req.query.limit) || 24;
     const projects = await m.Project.findAll({
       include: ["likers", m.Comment, "collaborators"],
       order: [["createdAt", "DESC"]],
@@ -16,7 +16,7 @@ app.get("/all", async (req, res, next) => {
 
     res.send({
       projects: result,
-      limit: limit + 25,
+      limit: limit + 24,
       hasNextPage: projects.length < limit ? false : true,
     });
   } catch (error) {
